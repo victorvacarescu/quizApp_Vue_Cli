@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <Header />
+    <Header 
+    :numOfCorrectAnsw="numOfCorrectAnsw"
+    :numOfTotal="numOfTotal"
+    />
     <b-container>
       <b-row>
         <b-col sm='6' offset='3'>
           <QuestionBox
-          v-if= "questions.length"
+          v-if="questions.length"
           :currentQuestion="questions[index]"
-          :next="next"/>
+          :next="next"
+          :increment="increment"/>
         </b-col>
       </b-row>
     </b-container>           
@@ -27,14 +31,20 @@ export default {
   data() {
     return {
       questions: [],
-      index: 0
+      index: 0,
+      numOfCorrectAnsw: 0,
+      numOfTotal: 0
     }
   },
   methods: {
     next() {
-      //while (index < 11){
         this.index++
-      //}
+    },
+    increment(isCorrect){
+      if (isCorrect){
+        this.numOfCorrectAnsw++
+      }
+      this.numOfTotal++
     }
   },
   mounted() {
